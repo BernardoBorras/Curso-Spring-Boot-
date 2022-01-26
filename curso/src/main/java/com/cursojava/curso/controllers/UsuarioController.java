@@ -19,7 +19,7 @@ public class UsuarioController {
         Usuario usuario = new Usuario();
 
         usuario.setId(id);
-        usuario.setNombre("lucas");
+        usuario.setNombre("lucasPrueba");
         usuario.setApellido("moy");
         usuario.setEmail("lucas@gmail.com");
         usuario.setTelefono("123456798");
