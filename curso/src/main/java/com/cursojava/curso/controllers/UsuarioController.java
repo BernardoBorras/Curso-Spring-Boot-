@@ -2,6 +2,7 @@ package com.cursojava.curso.controllers;
 
 
 import com.cursojava.curso.models.Usuario;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -11,12 +12,13 @@ import java.util.List;
 public class UsuarioController {
 
     // ---------------------------------------------- Metodo para retornar usuario en formato json
-    @RequestMapping(value="usuario")    //     URL
+    @RequestMapping(value="usuario/{id}")    //     URL
 
-    public Usuario getUsuario(){
+    public Usuario getUsuario(@PathVariable Long id){
 
         Usuario usuario = new Usuario();
 
+        usuario.setId(id);
         usuario.setNombre("lucas");
         usuario.setApellido("moy");
         usuario.setEmail("lucas@gmail.com");
