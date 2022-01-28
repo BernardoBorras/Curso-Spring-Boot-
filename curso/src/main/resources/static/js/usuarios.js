@@ -1,30 +1,24 @@
-
 // Call the dataTables jQuery plugin
-
-
 $(document).ready(function() {
-
   cargarUsuarios();
   $('#usuarios').DataTable();
-
 });
 
 
-
 async function cargarUsuarios() {
-
-  const request = await fetch('usuarios', {   // Esta es la url que manda a llamar de UsuarioController.java
-                                              //  la cual contiene el metodo getUsuarios() que escupe json.
-
+  const request = await fetch('usuarios', {
     method: 'GET',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
-    },
+    }
   });
-
   const usuarios = await request.json();
 
-  console.log(content);
+
+  let usuario = '<tr><td>213</td><td>Perrosquin Rock</td><td>lucas@gmail.com</td><td>1312456</td><td>5464</td><td><a href="#" class="btn btn-danger btn-circle"><i class="fas fa-trash"></i></a></td></tr>'
+
+  document.querySelector('#usuarios tbody').outerHTML = usuario;  // el error estaba en escribir outher/outer
 
 }
+
