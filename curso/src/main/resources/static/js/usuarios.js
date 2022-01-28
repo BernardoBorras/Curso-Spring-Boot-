@@ -13,12 +13,30 @@ async function cargarUsuarios() {
       'Content-Type': 'application/json'
     }
   });
-  const usuarios = await request.json();
+
+const usuarios = await request.json(); // const creada en esta clase, almacena el json con todos los datos de los objetos.
 
 
-  let usuario = '<tr><td>213</td><td>Perrosquin Rock</td><td>lucas@gmail.com</td><td>1312456</td><td>5464</td><td><a href="#" class="btn btn-danger btn-circle"><i class="fas fa-trash"></i></a></td></tr>'
+let listadoHtml='';   // Listado vacio al que se le van a ir cargando usuarios a medida que recorramos el json
 
-  document.querySelector('#usuarios tbody').outerHTML = usuario;  // el error estaba en escribir outher/outer
+  for (let usuario of usuarios){
+
+    let usuarioHtml = '<tr><td>213</td><td>'+usuario.nombre+' '+usuario.nombre+'</td><td>'+usuario.email+'</td><td>'+usuario.telefono+'</td><td><a href="#" class="btn btn-danger btn-circle"><i class="fas fa-trash"></i></a></td></tr>'
+
+    listadoHtml += usuarioHtml;
+
+    console.log(usuario)
+  }
+
+document.querySelector('#usuarios tbody').outerHTML = listadoHtml;  // el error estaba en escribir outher/outer
 
 }
+
+
+
+
+
+
+
+
 
