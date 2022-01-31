@@ -1,5 +1,14 @@
 package com.cursojava.curso.models;
 
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+// Vamos a indicar con que tabla de la base de datos esta relacionada esta clase usuario.
+// Agregando anotaciones vamos a indicarle a esta clase , con que tabla esta relacionada.
+
+@Entity // Anotación que define que una clase se puede asignar a una tabla.
+@Table(name = "usuarios") // Con esto la clase sabe que va a utilizar esa tabla.
 public class Usuario {
 
     private Long id;
