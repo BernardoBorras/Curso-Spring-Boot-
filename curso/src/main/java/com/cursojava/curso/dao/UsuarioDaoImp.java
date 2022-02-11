@@ -25,6 +25,12 @@ public class UsuarioDaoImp implements UsuarioDao{
 
     }
 
+    @Override
+    public void eliminar(long id) {
+        Usuario usuario = entityManager.find(Usuario.class,id);
+        entityManager.remove(usuario);
+    }
+
 
 }
 

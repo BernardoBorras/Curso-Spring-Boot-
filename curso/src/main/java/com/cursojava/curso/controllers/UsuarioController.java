@@ -4,7 +4,9 @@ package com.cursojava.curso.controllers;
 import com.cursojava.curso.dao.UsuarioDao;
 import com.cursojava.curso.models.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -38,19 +40,11 @@ public class UsuarioController {
     }
 
     // ---------------------------------------------- Metodo para eliminar usuario
-    @RequestMapping(value="eliminar")    //     URL
 
-    public Usuario eliminar(){
+    @RequestMapping(value="api/usuarios/{id}",method = RequestMethod.DELETE)
+    public void eliminar(@PathVariable long id){
+    usuarioDao.eliminar(id);
 
-        Usuario usuario = new Usuario();
-
-        usuario.setNombre("lucas");
-        usuario.setApellido("moy");
-        usuario.setEmail("lucas@gmail.com");
-        usuario.setTelefono("123456798");
-        usuario.setPassword("assas");
-
-        return usuario;
     }
 
     // ---------------------------------------------- Metodo para buscar usuario
