@@ -1,8 +1,10 @@
 package com.cursojava.curso.models;
 
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,7 +16,7 @@ import javax.persistence.Table;
 
 @Entity // Anotación que define que una clase se puede asignar a una tabla.
 @Table(name = "usuarios") // Con esto la clase sabe que va a utilizar esa tabla.
-
+@ToString @EqualsAndHashCode
 // le estamos indicando que tabla estamos utilizando, pero hibernate no se da cuenta por
 // si solo, que columna es por su nombre.
 
