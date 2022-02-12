@@ -22,7 +22,7 @@ public class UsuarioController {
     private UsuarioDao usuarioDao;
 
     // -------------------------------------------- Metodo para retornar usuarios en formato json
-    @RequestMapping(value = "usuarios")    //  URL
+    @RequestMapping(value = "api/usuarios")    //  URL
     public List<Usuario> getUsuarios() {
         return usuarioDao.getUsuarios();
     }
