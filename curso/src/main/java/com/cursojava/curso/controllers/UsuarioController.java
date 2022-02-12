@@ -4,10 +4,7 @@ package com.cursojava.curso.controllers;
 import com.cursojava.curso.dao.UsuarioDao;
 import com.cursojava.curso.models.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,10 +19,26 @@ public class UsuarioController {
     private UsuarioDao usuarioDao;
 
     // -------------------------------------------- Metodo para retornar usuarios en formato json
+
     @RequestMapping(value = "api/usuarios")    //  URL
     public List<Usuario> getUsuarios() {
         return usuarioDao.getUsuarios();
     }
+
+    // -------------------------------------------- Metodo para Registrar usuarios en formato json
+
+    @RequestMapping(value = "api/usuarios", method = RequestMethod.POST)    //  URL
+    public void registrarUsuario(@RequestBody Usuario usuario) {
+        usuarioDao.registrar(usuario);
+    }
+
+    // va a llamar a una funcion nueva llamada registrar que va a recibir como parametro un objeto de ususario
+    // con la anotacion @RequestBody estariamos convirtiendo el json que recibe a un usuario automaticamente.
+
+    // En esta funcion de la clase UsuarioController.java vamos a recibir los datos de registro de usuario que
+    // se ingresesn desde el html.
+
+
 
     // ---------------------------------------------- Metodo para editar usuario
     @RequestMapping(value="editar")    //     URL
@@ -47,20 +60,5 @@ public class UsuarioController {
 
     }
 
-    // ---------------------------------------------- Metodo para buscar usuario
-    @RequestMapping(value="buscar")    //     URL
-
-    public Usuario buscar(){
-
-        Usuario usuario = new Usuario();
-
-        usuario.setNombre("lucas");
-        usuario.setApellido("moy");
-        usuario.setEmail("lucas@gmail.com");
-        usuario.setTelefono("123456798");
-        usuario.setPassword("assas");
-
-        return usuario;
-    }
 
 }

@@ -9,4 +9,6 @@ public interface UsuarioDao { // la intereface indica que metodos esta obligado 
     List<Usuario> getUsuarios();
 
     void eliminar(long id);
+
+    void registrar(Usuario usuario);
 }

@@ -31,6 +31,11 @@ public class UsuarioDaoImp implements UsuarioDao{
         entityManager.remove(usuario);
     }
 
+    @Override
+    public void registrar(Usuario usuario) {
+        entityManager.merge(usuario);     // Para guardarlo en la base de datos escribimos esta linea, entityManager.merge(usuario)
+    }
+
 
 }
 
