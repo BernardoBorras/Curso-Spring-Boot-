@@ -33,8 +33,7 @@ $(document).ready(function() {
                                    // y lo convierte a un string de json, En este caso va a agarrar el objeto datos.             IMPORTANTE
     });                            //  Aca en el body ya estamos enviando todos los datos armados. (en json)
   
-  const usuarios = await request.json();   // constante que almacena el json con los datos de todos los usuarios. Transforma a json.
-   
+  // La borramos por que aca no se usa. 
   
   }
   

@@ -1,42 +1,30 @@
+
 $(document).ready(function() {
-    // on ready   
-      });
-    
-      // En esta funcion registrarUsuario() se van a extraer los datos que se ingresen en el formulario registrar.html. 
-      // Los datos que vamos a enviar al registrar tienen que tener el mismo formato que los datos que recibimos cuando los solicitamos. 
-      //      debido a esto, nos aseguramos que el objeto de js "datos" tenga los atributos correspondientes. Una vez cargado el objeto js 
-      //      con los datos. Mediante el metodo POST vamos a vamos a enviarle a UsuarioController el objeto js transformado a JSON. 
-    
+
+});
+
       
-      async function registrarUsuario() {
+    async function iniciarSesion() {
     
-        let datos = {};                                               // En esta linea creamos el objeto de js. Luego le asignamos los atributos. 
-        datos.nombre = document.getElementById('txtNombre').value;
-        datos.apellido = document.getElementById('txtApellido').value;
+        let datos = {};                                // Creamos el objeto de js. Luego le asignamos los atributos.
         datos.email = document.getElementById('txtEmail').value;
         datos.password = document.getElementById('txtPassword').value;
         
-        let repetirPassword = document.getElementById('txtRepeatPassword').value;
-    
-        if (repetirPassword != datos.password){
-            alert('Las contraseñas no coinciden');
-            return;                                      // El return se usa para que corte toda la funcion, en este caso corta registrarUsuarios()
-        }
-    
-        const request = await fetch('api/usuarios', {    // misma url que cargarUsuarios() y eliminarUsuarios()
-          method: 'POST',                                // diferente metodo
+
+        const request = await fetch('api/login', {    // Con este codigo hace el llamado al servidor
+          method: 'POST',
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify(datos)  // Lo que hace esto es llamar a la funcion JSON.stringify. Que agarra cualquier objeto de js     
-                                       // y lo convierte a un string de json, En este caso va a agarrar el objeto datos.             IMPORTANTE
-        });                            //  Aca en el body ya estamos enviando todos los datos armados. (en json)
+          body: JSON.stringify(datos)  //  Le esta pasando todos los datos necesarios para hacer el inicio de sesion.
+                                                
+        });                            
       
-      const usuarios = await request.json();   // constante que almacena el json con los datos de todos los usuarios. Transforma a json.
-       
-      
-      }
+        const respuesta = await request.json();   // Almacena el json con los datos de inicio de sesion.
+
+        alert("Funcion Activada")
+    }
       
      
       

@@ -43,16 +43,21 @@
                                     </div>
                                     <form class="user">
                                         <div class="form-group">
+
                                             <input type="email" class="form-control form-control-user"
-                                                id="exampleInputEmail" aria-describedby="emailHelp"
+                                                id="txtEmail" aria-describedby="emailHelp"
                                                 placeholder="Ingresa tu Email...">
                                         </div>
                                         <div class="form-group">
+
                                             <input type="password" class="form-control form-control-user"
-                                                id="exampleInputPassword" placeholder="Password">
+                                                id="txtPassword" placeholder="Password">
                                         </div>
                                        
-                                        <a href="index.html" class="btn btn-primary btn-user btn-block">
+                                    <!-- recordamos que al poner el atributo onclick podemos meter un poco de codigo js, en esta caso, activar 
+                                         la funcion "iniciarSesion()" de la clase login.js que se encuentra linkeada al final de este login.html -->
+
+                                        <a onclick="iniciarSesion()" href="#" class="btn btn-primary btn-user btn-block">
                                             Iniciar Sesion
                                         </a>
                                         
