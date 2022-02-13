@@ -15,9 +15,7 @@ async function cargarUsuarios() {
     }
   });
 
-// constante que almacena el json con los datos de todos los usuarios. Transforma a json.
-const usuarios = await request.json();
-
+const usuarios = await request.json();      // constante que almacena el json con los datos de todos los usuarios. Transforma a json.
 
 
 
@@ -28,7 +26,11 @@ let listadoHtml='';
 
     let botonEliminar = '<a href="#" onclick="eliminarUsuario(' + usuario.id + ')" class="btn btn-danger btn-circle"><i class="fas fa-trash"></i></a>';
   
-    let usuarioHtml = '<tr><td>213</td><td>'+usuario.nombre+' '+usuario.apellido+'</td><td>'+usuario.email+'</td><td>'+usuario.telefono+'</td><td>'+usuario.password+'</td><td>' + botonEliminar + '</td></tr>'
+    let telefono = usuario.telefono == null ? '-' : usuario.telefono;  // En js el ? es otra forma de utilizar un if() (mas comprimido). 
+
+    let usuarioHtml = '<tr><td>213</td><td>'+usuario.nombre+' '+usuario.apellido
+                      +'</td><td>'+usuario.email+'</td><td>'+telefono+'</td><td>'
+                      + usuario.password+'</td><td>' + botonEliminar + '</td></tr>'
 
     listadoHtml += usuarioHtml;   
 
