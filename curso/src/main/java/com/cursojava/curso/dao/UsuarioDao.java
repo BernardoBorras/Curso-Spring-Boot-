@@ -11,4 +11,6 @@ public interface UsuarioDao { // la intereface indica que metodos esta obligado 
     void eliminar(long id);
 
     void registrar(Usuario usuario);
+
+    boolean verificarCredenciales(Usuario usuario);
 }

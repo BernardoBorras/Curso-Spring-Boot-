@@ -1,6 +1,7 @@
 package com.cursojava.curso.dao;
 
 import com.cursojava.curso.models.Usuario;
+import org.springframework.context.annotation.EnableMBeanExport;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,6 +37,25 @@ public class UsuarioDaoImp implements UsuarioDao{
         entityManager.merge(usuario);     // Para guardarlo en la base de datos escribimos esta linea, entityManager.merge(usuario)
     }
 
+
+   // Esta funcion  verificarCredenciales()  recibe un argumento de tipo objeto.
+    @Override
+    public boolean verificarCredenciales(Usuario usuario){
+        
+        // Esta linea es similar a una consulta a SQL pero es consulta a Hibernate.
+        String query = "FROM Usuario WHERE email = :email AND password = :password ";
+        List<Usuario> lista = entityManager.createQuery(query)
+                .setParameter("email", usuario.getEmail())
+                .setParameter("password", usuario.getPassword())
+                .getResultList();
+
+        if (lista.isEmpty()){
+            return false;
+        }else{
+            return true;
+        }
+
+    }
 
 }
 
