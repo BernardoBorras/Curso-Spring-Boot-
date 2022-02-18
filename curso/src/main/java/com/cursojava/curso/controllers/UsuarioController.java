@@ -9,34 +9,53 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
+
+
+
 @RestController
 public class UsuarioController {
 
-// esta anotacion hace que la clase usuarioDaoImpl.java cree un objeto y lo guarde dentro de la variable
-//  usuarioDao, sin necesidad de hacer nada.   Esto seria aplicar inyeccion de dependencias.
 
+
+
+
+
+    //  inyeccion de dependencias: Esto seria aplicarla. @Autowired hace que la clase usuarioDaoImpl.java
+    //  cree un objeto y lo guarde dentro de la variable usuarioDao, sin necesidad de hacer nada.
+    
     @Autowired
     private UsuarioDao usuarioDao;
-
-    // -------------------------------------------- Metodo para retornar usuarios en formato json
-
-    @RequestMapping(value = "api/usuarios")    //  URL
-    public List<Usuario> getUsuarios() {
-        return usuarioDao.getUsuarios();
+                                               
+    @RequestMapping(value = "api/usuarios")    //  URL invocada desde usuarios.js activa la funcion
+    public List<Usuario> getUsuarios() {       //  Funcion que retorna un list de objetos usuario 
+        return usuarioDao.getUsuarios();       // Variable de interface usuarioDao utiliza el metodo getUsuarios()
     }
 
-    // -------------------------------------------- Metodo para Registrar usuarios en formato json
 
-    @RequestMapping(value = "api/usuarios", method = RequestMethod.POST)    //  URL
-    public void registrarUsuario(@RequestBody Usuario usuario) {
-        usuarioDao.registrar(usuario);
+
+
+
+
+    //                                                                            Por defectos las funciones invocadas por URL
+    @RequestMapping(value="api/usuarios/{id}",method = RequestMethod.DELETE)  //  vienen con get, especificamos que es DELETE
+    public void eliminar(@PathVariable long id){  // La funcion invocada por URL eliminar, recibe un argumento de tipo long. 
+        usuarioDao.eliminar(id);
+    }
+    
+
+
+
+    
+    @RequestMapping(value = "api/usuarios", method = RequestMethod.POST)  // URL de funcion que recibe el json con los datos del usuario. 
+    public void registrarUsuario(@RequestBody Usuario usuario) {          // Solicitar el body recibido y convertirlo a objeto de la clase Usuario.java
+        usuarioDao.registrar(usuario);                                    // Anotacion @RequestBody convierte el json recibido a un usuario.
     }
 
-    // va a llamar a una funcion nueva llamada registrar que va a recibir como parametro un objeto de ususario
-    // con la anotacion @RequestBody estariamos convirtiendo el json que recibe a un usuario automaticamente.
-
-    // En esta funcion de la clase UsuarioController.java vamos a recibir los datos de registro de usuario que
-    // se ingresesn desde el html.
+    // Mediante inyeccion utiliza el metodo registrar() de usuarioDaoImp, a travez de la variable usuarioDao (de su interface)
+    // Metodo de usuarioDaoImp recibe objeto java y le solicita a hibernate que lo guarde en su mapa ORM.
+    
 
 
 
@@ -50,14 +69,6 @@ public class UsuarioController {
         usuario.setTelefono("123456798");
         usuario.setPassword("assas");
         return usuario;
-    }
-
-    // ---------------------------------------------- Metodo para eliminar usuario
-
-    @RequestMapping(value="api/usuarios/{id}",method = RequestMethod.DELETE)
-    public void eliminar(@PathVariable long id){
-    usuarioDao.eliminar(id);
-
     }
 
 

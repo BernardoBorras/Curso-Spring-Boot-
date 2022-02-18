@@ -10,31 +10,29 @@ $(document).ready(function() {
   
   async function registrarUsuario() {
 
-    let datos = {};                                               // En esta linea creamos el objeto de js. Luego le asignamos los atributos. 
-    datos.nombre = document.getElementById('txtNombre').value;
-    datos.apellido = document.getElementById('txtApellido').value;
-    datos.email = document.getElementById('txtEmail').value;
-    datos.password = document.getElementById('txtPassword').value;
+      let datos = {};                                               // Creamos el objeto de js. Luego le asignamos los atributos. 
+        datos.nombre = document.getElementById('txtNombre').value;
+        datos.apellido = document.getElementById('txtApellido').value;
+        datos.email = document.getElementById('txtEmail').value;
+        datos.password = document.getElementById('txtPassword').value;
     
-    let repetirPassword = document.getElementById('txtRepeatPassword').value;
+      let repetirPassword = document.getElementById('txtRepeatPassword').value;
 
-    if (repetirPassword != datos.password){
-        alert('Las contraseñas no coinciden');
-        return;                                      // El return se usa para que corte toda la funcion, en este caso corta registrarUsuarios()
-    }
+      if (repetirPassword != datos.password){
+          alert('Las contraseñas no coinciden');
+          return;                                      // El return se usa para que corte toda la funcion, en este caso corta registrarUsuarios()
+      }
 
-    const request = await fetch('api/usuarios', {    // misma url que cargarUsuarios() y eliminarUsuarios()
-      method: 'POST',                                // diferente metodo
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(datos)  // Lo que hace esto es llamar a la funcion JSON.stringify. Que agarra cualquier objeto de js     
-                                   // y lo convierte a un string de json, En este caso va a agarrar el objeto datos.             IMPORTANTE
-    });                            //  Aca en el body ya estamos enviando todos los datos armados. (en json)
-  
-  // La borramos por que aca no se usa. 
-  
+      const request = await fetch('api/usuarios', {    // Misma url que cargarUsuarios() se diferencian por el metodo
+        method: 'POST',                                
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(datos)  // Lo que hace esto es llamar a la funcion JSON.stringify. Que agarra cualquier objeto de js     
+                                     //  y lo convierte a un string de json, En este caso va a agarrar el objeto datos.             IMPORTANTE
+      });                            //  Aca en el body ya estamos enviando todos los datos armados. (en json)
+    
   }
   
  

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController //              para que la clase sea un controlador, debemos agegarle la anotacion.
+@RestController //  Para que la clase sea un controlador, Agegamos la anotacion.
 public class AuthController {
 
     @Autowired
@@ -27,5 +27,4 @@ public class AuthController {
         }
         return "FAIL";
     }
-
 }

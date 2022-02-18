@@ -6,18 +6,18 @@ $(document).ready(function() {
       
     async function iniciarSesion() {
     
-        let datos = {};                                // Creamos el objeto de js. Luego le asignamos los atributos.
+        let datos = {};                                          // Objeto de js. almacena en sus atributos, los datos del formulario. 
         datos.email = document.getElementById('txtEmail').value;
         datos.password = document.getElementById('txtPassword').value;
         
 
         const request = await fetch('api/login', {    // Con este codigo hace el llamado al servidor
-          method: 'POST',
+          method: 'POST',                             // Usamos POST para registrar usuario y para iniciar sesion.
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify(datos)  //  Le esta pasando todos los datos necesarios para hacer el inicio de sesion.
+          body: JSON.stringify(datos)               //  Enviamos el objeto js convertido a json
                                                 
         });                            
       
