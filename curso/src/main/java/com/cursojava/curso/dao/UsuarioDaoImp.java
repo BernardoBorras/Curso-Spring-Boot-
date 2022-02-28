@@ -1,6 +1,8 @@
 package com.cursojava.curso.dao;
 
 import com.cursojava.curso.models.Usuario;
+import de.mkammerer.argon2.Argon2;
+import de.mkammerer.argon2.Argon2Factory;
 import org.springframework.context.annotation.EnableMBeanExport;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,28 +54,41 @@ public class UsuarioDaoImp implements UsuarioDao{
 
 
 
-    
 
 
-   // Esta funcion  verificarCredenciales()  recibe un argumento de tipo objeto.
     @Override
     public boolean verificarCredenciales(Usuario usuario){
 
-        // Esta linea es similar a una consulta a SQL pero es consulta a Hibernate.
-        String query = "FROM Usuario WHERE email = :email AND password = :password ";
+        String query = "FROM Usuario WHERE email = :email";  // Consulta a Hibernate. (usuario con ese email)
 
+        // Armamos el list de objetos. Que establece los parametros de la consulta a Hibernate.
         List<Usuario> lista = entityManager.createQuery(query)
                 .setParameter("email", usuario.getEmail())
-                .setParameter("password", usuario.getPassword())
                 .getResultList();
 
         if (lista.isEmpty()){
             return false;
-        }else{
-            return true;
         }
 
+        // Guardamos en un String el atributo Password del objeto consultado a hibernate (pass almacenada en la bd)
+        String passwordHashed = lista.get(0).getPassword();
+
+        // Creamos una variable de tipo argon2 (es como crear un objeto de argon)
+        Argon2 argon2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);
+
+        // Metodo verify() Compara un hash (consulta a hibernate)con una contraseña ingresada(objeto usuario).
+        // Si bien esta ultima no esta hasheada el metodo verify() se encarga de hashearla y comparar.
+        // Como resultado, escupe valor booleano.
+
+        boolean lapasswordEsLaMisma = argon2.verify(passwordHashed, usuario.getPassword());
+
+        return lapasswordEsLaMisma;
     }
 
+    // Entonces: El metodo verificarCredenciales(Usuario usuario) recibe un objeto java cuyos atributos.
+    // Son los datos ingresados por el usuario al querer iniciar sesion (mail y pass).
+    // Lo compara con el atributo pass del objeto consultado a hibernate (por su e-mail).
+    // mediante el metodo verify() del objeto argon2.
+    // Y retorna el boleano "lapasswordEsLaMisma"
 }
 

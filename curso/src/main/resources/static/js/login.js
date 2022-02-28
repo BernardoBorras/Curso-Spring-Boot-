@@ -21,9 +21,14 @@ $(document).ready(function() {
                                                 
         });                            
       
-        const respuesta = await request.json();   // Almacena el json con los datos de inicio de sesion.
+        const respuesta = await request.text();   // Almacena el json con los datos de inicio de sesion.
 
-        alert("Funcion Activada")
+        if (respuesta == 'OK'){
+        window.location.href = 'usuarios.html'
+        }else {
+        alert("Las credenciales son incorrectas, intente nuevamente")
+        }
+
     }
       
      
