@@ -21,12 +21,15 @@ $(document).ready(function() {
                                                 
         });                            
       
-        const respuesta = await request.text();   // Almacena el json con los datos de inicio de sesion.
+        const respuesta = await request.text();  // Almacena el json con los datos de inicio de sesion.
 
-        if (respuesta == 'OK'){
-        window.location.href = 'usuarios.html'
+        if (respuesta != 'FAIL'){
+            localStorage.token = respuesta;          // Guardar token del lado del browser.
+            // podemos guardar un poquito mas de informacion en el local storage. Como el email
+            localStorage.email = datos.email;
+            window.location.href = 'usuarios.html'
         }else {
-        alert("Las credenciales son incorrectas, intente nuevamente")
+            alert("Las credenciales son incorrectas, intente nuevamente")
         }
 
     }

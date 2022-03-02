@@ -16,48 +16,39 @@ import java.util.List;
 @Repository                                                                                               // acceder al repositorio de la base de datos.
 @Transactional                                                         // Le da la funcionalidad a la clase de poder armar las consultas de sql a la BD
 
-public class UsuarioDaoImp implements UsuarioDao{
+  public class UsuarioDaoImp implements UsuarioDao{
 
-    @PersistenceContext
-    EntityManager entityManager;                                                                    // Nos va a servir para armar las consultas a la BD
-
-
+        @PersistenceContext
+        EntityManager entityManager;                                                                    // Nos va a servir para armar las consultas a la BD
 
 
 
-    @Override
-    public List<Usuario> getUsuarios() {
+      @Override
+      public List<Usuario> getUsuarios() {
         String query = "FROM Usuario";                                   // Esta linea es similar a una consulta a SQL pero es consulta a Hibernate.
-       return entityManager.createQuery(query).getResultList();       // Retorname la consulta realizada a hibernate (todos los objetos de la clase usuario) 
-    }                                                                 // que se almaceno en la variable query, en formato de un List de usuarios.
+        return entityManager.createQuery(query).getResultList();        // Retorname la consulta realizada a hibernate (todos los objetos de la clase usuario)
+      }                                                                 // que se almaceno en la variable query, en formato de un List de usuarios.
 
 
-    
 
-
-    @Override
-    public void eliminar(long id) {
+      @Override
+      public void eliminar(long id) {
         Usuario usuario = entityManager.find(Usuario.class,id);
         entityManager.remove(usuario);
-    }
-
-    
+      }
 
 
 
-    @Override
-    public void registrar(Usuario usuario) {
+      @Override
+      public void registrar(Usuario usuario) {
         entityManager.merge(usuario);                            // Se comunica con hibernate para solicitarle que guarde el objeto en su mapa ORM
-    }
+      }
 
 
 
 
-
-
-
-    @Override
-    public boolean verificarCredenciales(Usuario usuario){
+      @Override
+      public Usuario obtenerUsuarioPorCredenciales(Usuario usuario) {
 
         String query = "FROM Usuario WHERE email = :email";  // Consulta a Hibernate. (usuario con ese email)
 
@@ -66,8 +57,8 @@ public class UsuarioDaoImp implements UsuarioDao{
                 .setParameter("email", usuario.getEmail())
                 .getResultList();
 
-        if (lista.isEmpty()){
-            return false;
+        if (lista.isEmpty()) {
+            return null;
         }
 
         // Guardamos en un String el atributo Password del objeto consultado a hibernate (pass almacenada en la bd)
@@ -80,15 +71,18 @@ public class UsuarioDaoImp implements UsuarioDao{
         // Si bien esta ultima no esta hasheada el metodo verify() se encarga de hashearla y comparar.
         // Como resultado, escupe valor booleano.
 
-        boolean lapasswordEsLaMisma = argon2.verify(passwordHashed, usuario.getPassword());
-
-        return lapasswordEsLaMisma;
-    }
+        // Si la verificacion fue correcta retorna el primer objeto de la lista
+        if (argon2.verify(passwordHashed, usuario.getPassword())) {
+            return lista.get(0);
+        }
+        return null;
+      }
+  }
 
     // Entonces: El metodo verificarCredenciales(Usuario usuario) recibe un objeto java cuyos atributos.
     // Son los datos ingresados por el usuario al querer iniciar sesion (mail y pass).
     // Lo compara con el atributo pass del objeto consultado a hibernate (por su e-mail).
     // mediante el metodo verify() del objeto argon2.
     // Y retorna el boleano "lapasswordEsLaMisma"
-}
+
 
