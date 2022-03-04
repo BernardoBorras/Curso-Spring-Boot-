@@ -41,11 +41,20 @@ import java.util.List;
 
       @Override
       public void registrar(Usuario usuario) {
-        entityManager.merge(usuario);                            // Se comunica con hibernate para solicitarle que guarde el objeto en su mapa ORM
+        entityManager.merge(usuario);      // Se Comunica con hibernate, solicita que guarde el objeto en su mapa ORM
       }
 
 
+    // El metodo obtenerUsuarioPorCredenciales(Usuario usuario) recibe un objeto java cuyos atributos.
+    // Son los datos ingresados por el usuario al querer iniciar sesion (mail y pass).
+    // Consulta a hibernate si tiene un objeto con el mismo email que usuario. Si lo tiene, se carga en el List<>.
+    // Si no lo tiene se corta todo. Retorna null.
+    // Guardamos en un String el atributo pass hasehado del objeto almacenado en el list<>.
+    // Mediante el metodo verify() del objeto argon2 comparamos el pass de usuario con el pass hasheado del list<>.
+    // Si la pasword es la misma, el metodo obtenerUsuarioPorCredenciales()  retorna el objeto del list<>
 
+    // Este metodo recibe un objeto usuario con solo 2 atributos. Y retorna (si es correcto), el objeto consultado a
+    // hibernate, el cual tiene todos los parametros completos, por ser un usuario en la base de datos.
 
       @Override
       public Usuario obtenerUsuarioPorCredenciales(Usuario usuario) {
@@ -79,10 +88,6 @@ import java.util.List;
       }
   }
 
-    // Entonces: El metodo verificarCredenciales(Usuario usuario) recibe un objeto java cuyos atributos.
-    // Son los datos ingresados por el usuario al querer iniciar sesion (mail y pass).
-    // Lo compara con el atributo pass del objeto consultado a hibernate (por su e-mail).
-    // mediante el metodo verify() del objeto argon2.
-    // Y retorna el boleano "lapasswordEsLaMisma"
+
 
 

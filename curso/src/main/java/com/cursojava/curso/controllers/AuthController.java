@@ -13,24 +13,34 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {       // Clase controlador creada especificamente para verificar los inicios de sesion.
 
     @Autowired
-    private UsuarioDao usuarioDao;
+    private UsuarioDao usuarioDao;   // Inyeccion de dependencias (suministramos objeto de la interface)
 
-    // creamos objeto jwt
     @Autowired
-    private JWTUtil jwtUtil;
+    private JWTUtil jwtUtil;         // creamos objeto jwt
 
-    //  El metodo es post, por que envia informacion internamente.
-    @RequestMapping(value = "api/login", method = RequestMethod.POST)
+    @RequestMapping(value = "api/login", method = RequestMethod.POST) //  Metodo POST, envia informacion internamente.
+
     public String login(@RequestBody Usuario usuario) {
+
+        // Creo un objeto de la clase modelo "Usuario" cuyo valores el objeto que retorna el metodo de UsuarioDaoImp.java
+        // Al que le envie el objeto que recibi de la clase login.js. Y si es correcto me retorna el objeto de la BD.
 
         Usuario usuarioLogueado = usuarioDao.obtenerUsuarioPorCredenciales(usuario);
 
-        if (usuarioLogueado != null){    //Si la verificacion fue correcta
+        // Si la verificacion no fue incorrecta. Almacenamos en un String. El valor que devuelve, utilizar el metodo
+        // del objeto jwtUtil/"create()". El cual nos retorna el JWT si le damos: id del usuario, Email.
+
+        if (usuarioLogueado != null){
 
             String tokenJwt = jwtUtil.create(String.valueOf(usuarioLogueado.getId()), usuarioLogueado.getEmail());
 
             return tokenJwt;
         }
         return "FAIL";
+
+        // Entonces el metodo loguin() de la clase AuthController.java recibe un objeto usuario.
+        // De la clase loguin.js. Lo procesa. Y si es correcto, retorna un sting JWT.
+
     }
 }
+

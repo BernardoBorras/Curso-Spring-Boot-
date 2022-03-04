@@ -1,12 +1,10 @@
 
 $(document).ready(function() {
-
 });
 
-      
     async function iniciarSesion() {
     
-        let datos = {};                                          // Objeto de js. almacena en sus atributos, los datos del formulario. 
+        let datos = {};                                  // Objeto de js. almacena en sus atributos, los datos del formulario.
         datos.email = document.getElementById('txtEmail').value;
         datos.password = document.getElementById('txtPassword').value;
         
@@ -21,17 +19,17 @@ $(document).ready(function() {
                                                 
         });                            
       
-        const respuesta = await request.text();  // Almacena el json con los datos de inicio de sesion.
+        const respuesta = await request.text();        // Almacena la respuesta de la request (token)
 
-        if (respuesta != 'FAIL'){
+        if (respuesta != 'FAIL'){                // Si la resp fue un string token, almacenalo en el local storage.
+                                                 // Y redirigime a la pagina usuarios.html, caso contrario, alert!
             localStorage.token = respuesta;          // Guardar token del lado del browser.
-            // podemos guardar un poquito mas de informacion en el local storage. Como el email
-            localStorage.email = datos.email;
+            localStorage.email = datos.email;        // Podemos guardar mas de informacion en local storage. email
             window.location.href = 'usuarios.html'
+
         }else {
             alert("Las credenciales son incorrectas, intente nuevamente")
         }
-
     }
       
      
