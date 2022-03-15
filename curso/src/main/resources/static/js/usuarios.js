@@ -1,9 +1,15 @@
 // Call the dataTables jQuery plugin.   +++   Esto se encarga de generar la paginacion. 
 
 $(document).ready(function() {
-  cargarUsuarios();
+  cargarUsuarios();     // activar la funcion al cargar la pagina
   $('#usuarios').DataTable();
+  actualizarEmailDelUsuario();
 });
+
+function actualizarEmailDelUsuario(){
+document.getElementById('txt-email-usuario').outerHTML = localStorage.email;
+}
+
 
 
 // La clase cargarUsuarios() contiene las funciones... 
