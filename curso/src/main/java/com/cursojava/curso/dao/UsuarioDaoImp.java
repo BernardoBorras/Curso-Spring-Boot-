@@ -25,9 +25,9 @@ import java.util.List;
 
       @Override
       public List<Usuario> getUsuarios() {
-        String query = "FROM Usuario";                                   // Esta linea es similar a una consulta a SQL pero es consulta a Hibernate.
-        return entityManager.createQuery(query).getResultList();        // Retorname la consulta realizada a hibernate (todos los objetos de la clase usuario)
-      }                                                                 // que se almaceno en la variable query, en formato de un List de usuarios.
+        String query = "FROM Usuario";                                // Esta linea es similar a una consulta a SQL pero es consulta a Hibernate.
+        return entityManager.createQuery(query).getResultList();      // Retorname la consulta realizada a hibernate (todos los objetos usuario)
+      }                                                               // que se almaceno en la variable query, en formato de un List de usuarios.
 
 
 
@@ -45,40 +45,42 @@ import java.util.List;
       }
 
 
-    // El metodo obtenerUsuarioPorCredenciales(Usuario usuario) recibe un objeto java cuyos atributos.
+    // El metodo obtenerUsuarioPorCredenciales(Usuario usuario) recibe un objeto java usuario, cuyos atributos.
     // Son los datos ingresados por el usuario al querer iniciar sesion (mail y pass).
-    // Consulta a hibernate si tiene un objeto con el mismo email que usuario. Si lo tiene, se carga en el List<>.
-    // Si no lo tiene se corta todo. Retorna null.
-    // Guardamos en un String el atributo pass hasehado del objeto almacenado en el list<>.
-    // Mediante el metodo verify() del objeto argon2 comparamos el pass de usuario con el pass hasheado del list<>.
+    // Consulta a hibernate si tiene un objeto con el mismo mail. 
+    // Si lo tiene, se carga en el List<>. Si no lo tiene se corta todo. Retorna null.
+    // Guardamos en un String el atributo pass (hasehado) del objeto almacenado en el list<>.
+    // Mediante el metodo verify() del objeto argon2, comparamos pass de usuario con pass (hasheado) del objeto del list<>.
     // Si la pasword es la misma, el metodo obtenerUsuarioPorCredenciales()  retorna el objeto del list<>
 
-    // Este metodo recibe un objeto usuario con solo 2 atributos. Y retorna (si es correcto), el objeto consultado a
-    // hibernate, el cual tiene todos los parametros completos, por ser un usuario en la base de datos.
+
+    // Antes llamado, verificarCredenciales(). Verifica las credenciales, pero en lugar de retornar un booleano. 
+    // Retorna el objeto del mapa ORM, que coincide con las credenciales ingresadas. 
+  
 
       @Override
-      public Usuario obtenerUsuarioPorCredenciales(Usuario usuario) {
+      public Usuario obtenerUsuarioPorCredenciales(Usuario usuario) { 
 
         String query = "FROM Usuario WHERE email = :email";  // Consulta a Hibernate. (usuario con ese email)
 
-        // Armamos el list de objetos. Que establece los parametros de la consulta a Hibernate.
+        // Armamos list de objetos. Que establece los parametros de la consulta a Hibernate.(complejo para evitar hacking)
         List<Usuario> lista = entityManager.createQuery(query)
                 .setParameter("email", usuario.getEmail())
                 .getResultList();
 
-        if (lista.isEmpty()) {
+        if (lista.isEmpty()) {      // Si no se cargo ningun objeto (no existe en la bd) se corta todo. Retorna null. 
             return null;
         }
 
-        // Guardamos en un String el atributo Password del objeto consultado a hibernate (pass almacenada en la bd)
+        // Guardamos en String, atributo Pass del objeto consultado a hibernate (pass almacenada en la bd)
         String passwordHashed = lista.get(0).getPassword();
 
         // Creamos una variable de tipo argon2 (es como crear un objeto de argon)
         Argon2 argon2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);
 
-        // Metodo verify() Compara un hash (consulta a hibernate)con una contraseña ingresada(objeto usuario).
-        // Si bien esta ultima no esta hasheada el metodo verify() se encarga de hashearla y comparar.
-        // Como resultado, escupe valor booleano.
+        // Metodo verify() de argon2 Compara un hash con una pass comun. 
+        // El metodo verify() se encarga de hashearla pass comun y comparar.
+        // Escupe booleano.
 
         // Si la verificacion fue correcta retorna el primer objeto de la lista
         if (argon2.verify(passwordHashed, usuario.getPassword())) {

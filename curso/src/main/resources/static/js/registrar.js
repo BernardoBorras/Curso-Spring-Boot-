@@ -2,6 +2,13 @@ $(document).ready(function() {
 // on ready   
   });
 
+
+// Esta clase contiene la funcion  registrarUsuario()
+// Que se activa desde registrar.html
+
+
+
+
   // En esta funcion registrarUsuario() se van a extraer los datos que se ingresen en el formulario registrar.html. 
   // Los datos que vamos a enviar al registrar tienen que tener el mismo formato que los datos que recibimos cuando los solicitamos. 
   //      debido a esto, nos aseguramos que el objeto de js "datos" tenga los atributos correspondientes. Una vez cargado el objeto js 

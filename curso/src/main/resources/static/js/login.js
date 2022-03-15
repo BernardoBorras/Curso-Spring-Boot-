@@ -2,9 +2,18 @@
 $(document).ready(function() {
 });
 
+
+// Esta funcion js toma los datos del fomulario loguin.html 
+// Los envia a java y recibe un String como respuesta. 
+// Segun el string = jwt o FAIL
+// Almacena en local storage el jwt, info extra y redirige a usuarios.html
+// O
+// Abre una ventana de alerta "Las credenciales son incorrectas, intente nuevamente"
+
+
     async function iniciarSesion() {
     
-        let datos = {};                                  // Objeto de js. almacena en sus atributos, los datos del formulario.
+        let datos = {};                               // Objeto de js. almacena en sus atributos, los datos del formulario.
         datos.email = document.getElementById('txtEmail').value;
         datos.password = document.getElementById('txtPassword').value;
         
@@ -15,11 +24,11 @@ $(document).ready(function() {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify(datos)               //  Enviamos el objeto js convertido a json
+          body: JSON.stringify(datos)                 //  Enviamos el objeto js convertido a json
                                                 
         });                            
       
-        const respuesta = await request.text();        // Almacena la respuesta de la request (token)
+        const respuesta = await request.text();       // Almacena la respuesta de la request (token)
 
         if (respuesta != 'FAIL'){                // Si la resp fue un string token, almacenalo en el local storage.
                                                  // Y redirigime a la pagina usuarios.html, caso contrario, alert!

@@ -66,7 +66,7 @@ public class JWTUtil {
     }
 
     /**
-     * Method to validate and read the JWT
+     * Método para validar y leer el JWT
      *
      * @param jwt
      * @return
@@ -81,14 +81,15 @@ public class JWTUtil {
     }
 
     /**
-     * Method to validate and read the JWT
+     * Método para validar y leer el JWT
      *
      * @param jwt
      * @return
      */
     public String getKey(String jwt) {
-        // This line will throw an exception if it is not a signed JWS (as
-        // expected)
+
+        // Esta línea arrojará una excepción si no es un JWS (JWSignature) firmado (como se esperaba)
+
         Claims claims = Jwts.parser().setSigningKey(DatatypeConverter.parseBase64Binary(key))
                 .parseClaimsJws(jwt).getBody();
 
