@@ -22,8 +22,8 @@ import java.util.List;
 
 @RestController
 public class UsuarioController {
-    //  inyeccion de dependencias: @Autowired hace que la clase usuarioDaoImpl.java
-    //  cree un objeto y lo guarde dentro de la variable usuarioDao, sin necesidad de hacer nada.
+    //  inyeccion de dependencias: @Autowired permite que la clase usuarioDaoImpl.java
+    //  cree un objeto de UsuarioDaoImp.java y lo guarde dentro de la variable usuarioDao.
     @Autowired
     private UsuarioDao usuarioDao;
 
